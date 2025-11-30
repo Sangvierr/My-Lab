@@ -36,7 +36,7 @@ graph LR
         Win["Windows Desktop - WSL2\nGPU Worker Node\nAMD 7800X3D + RTX 5070 32GB"]
     end
 
-    Mac <--- "Network (Wi-Fi / SSH Tunnel)" ---> Win
+    Mac -- "Network: Wi-Fi / SSH Tunnel" --> Win
 ```
 - Client (Control Plane): M2 MacBook Air
 
