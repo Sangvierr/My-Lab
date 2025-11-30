@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mylab.newsbackend.mapper.NewsMapper">
+    <update id="saveNews" parameterType="com.mylab.newsbackend.dto.NewsDto">
+        MERGE INTO MY_NEWS target
+        USING (SELECT #{link} AS link FROM dual) source
+        ON (target.LINK = source.link)
+        WHEN NOT MATCHED THEN
+            INSERT (
+                    ID,
+                    TITLE,
+                    LINK,
+                    SUMMARY,
+                    CREATED_AT
+                ) VALUES (
+                          SEQ_MY_NEWS_ID.NEXTVAL,
+                          #{title},
+                          #{link},
+                          #{summary},
+                          SYSDATE
+                        )
+    </update>
+
+</mapper>

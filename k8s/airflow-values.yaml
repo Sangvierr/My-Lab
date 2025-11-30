@@ -1,0 +1,8 @@
+# Airflow 3.0 UI를 켜기 위한 설정
+webserver:
+  enabled: true
+
+# PostgreSQL 이미지 태그 고정 (ImagePullBackOff 방지)
+postgresql:
+  image:
+    tag: 16
