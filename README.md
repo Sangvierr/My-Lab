@@ -26,17 +26,17 @@ On-Premise AI: 클라우드 비용 없이 로컬 GPU(RTX 5070)를 활용한 LLM(
 
 ```mermaid
 graph LR
-    subgraph Client_Zone [💻 Client Side]
+    subgraph Client_Zone [Client: Control & Management]
         direction TB
-        Mac[<b>M2 MacBook Air</b><br/>OS: macOS Sequoia<br/>Chip: Apple M2<br/>Role: Control Plane]
+        Mac["M2 MacBook Air\nmacOS Sequoia\nControl Plane Node"]
     end
 
-    subgraph Server_Zone [🖥️ Server Side]
+    subgraph Server_Zone [Server: Compute Resource]
         direction TB
-        Win[<b>Windows Desktop</b><br/>OS: Windows 11 + WSL2<br/>CPU: AMD 7800X3D<br/>GPU: RTX 5070 (32GB RAM)<br/>Role: Worker Node]
+        Win["Windows Desktop - WSL2\nGPU Worker Node\nAMD 7800X3D + RTX 5070 32GB"]
     end
 
-    Mac <== "Network (Wi-Fi / Port Proxy)" ==> Win
+    Mac <--- "Network (Wi-Fi / SSH Tunnel)" ---> Win
 ```
 - Client (Control Plane): M2 MacBook Air
 
@@ -53,23 +53,23 @@ graph LR
 ```mermaid
 graph TD
     subgraph K8s_Cluster [Windows: Kubernetes Cluster]
-        Airflow[🚀 Airflow 3.0 DAG]
+        Airflow[Airflow 3.0 DAG]
     end
     
     subgraph AI_Engine [Windows: Host]
-        Ollama[🦙 Ollama (Qwen3:4b)]
+        Ollama[Ollama - Qwen3-4B]
     end
     
     subgraph Backend_Server [MacBook]
-        SpringBoot[☕ Spring Boot API]
+        SpringBoot[Spring Boot API]
     end
     
     subgraph Database [Windows: Host]
-        Oracle[(🗄️ Oracle 11g)]
+        Oracle[(Oracle 11g DB)]
     end
 
     %% Flow
-    Airflow -- "1. Crawling (Python)" --> NaverNews[🌐 Naver News]
+    Airflow -- "1. Crawling (Python)" --> NaverNews[Naver News Source]
     Airflow -- "2. Summarization Request (REST)" --> Ollama
     Ollama -- "3. Summary Response" --> Airflow
     Airflow -- "4. Data Transfer (REST)" --> SpringBoot
