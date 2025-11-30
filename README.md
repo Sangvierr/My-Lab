@@ -2,6 +2,7 @@
 
 <center>"Mac의 생산성"과 "데스크탑의 GPU 파워"를 결합한 하이브리드 MLOps 파이프라인 구축 프로젝트</center>
 
+
 이 프로젝트는 ***Airflow 3.0***, ***Kubernetes***, ***Ollama***, Spring Boot를 활용하여 뉴스 데이터를 수집, 요약하고 저장하는 자동화된 데이터 파이프라인(Data Pipeline)입니다.
 
 ## 📖 Project Overview (프로젝트 개요)
@@ -56,7 +57,7 @@ graph TD
     end
     
     subgraph AI_Engine [Windows: Host]
-        Ollama[🦙 Ollama (Qwen2.5)]
+        Ollama[🦙 Ollama (Qwen3:4b)]
     end
     
     subgraph Backend_Server [MacBook]
@@ -138,7 +139,7 @@ Airflow 3.0 architecture accesses the UI via the API Server.
 
 
 📂 Project Structure
-```mermaid
+```text
 MY-LAB/
 ├── dags/                  # Airflow DAGs (Python)
 │   └── 02_naver_news.py   # Main Pipeline Code
