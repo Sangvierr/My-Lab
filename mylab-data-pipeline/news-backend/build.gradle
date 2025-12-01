@@ -6,13 +6,8 @@ plugins {
 
 group = 'com.mylab'
 version = '0.0.1-SNAPSHOT'
-description = 'news-backend'
-
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
-    }
-}
+description = 'mylab-data-pipeline'
+sourceCompatibility = '17'
 
 configurations {
     compileOnly {
