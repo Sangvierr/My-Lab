@@ -1,4 +1,4 @@
-package com.mylab.newsbackend.dto;
+package com.mylab.news.dto;
 
 import lombok.Data;
 import java.util.Date;

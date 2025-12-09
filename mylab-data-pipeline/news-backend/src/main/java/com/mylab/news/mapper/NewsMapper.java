@@ -1,6 +1,6 @@
-package com.mylab.newsbackend.mapper;
+package com.mylab.news.mapper;
 
-import com.mylab.newsbackend.dto.NewsDto;
+import com.mylab.news.dto.NewsDto;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

@@ -1,7 +1,7 @@
-package com.mylab.newsbackend.service;
+package com.mylab.news.service;
 
-import com.mylab.newsbackend.dto.NewsDto;
-import com.mylab.newsbackend.mapper.NewsMapper;
+import com.mylab.news.dto.NewsDto;
+import com.mylab.news.mapper.NewsMapper;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 

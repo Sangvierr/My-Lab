@@ -1,7 +1,7 @@
-package com.mylab.newsbackend.controller;
+package com.mylab.news.controller;
 
-import com.mylab.newsbackend.dto.NewsDto;
-import com.mylab.newsbackend.service.NewsService;
+import com.mylab.news.dto.NewsDto;
+import com.mylab.news.service.NewsService;
 import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
 
