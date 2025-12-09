@@ -1,13 +1,13 @@
-package com.mylab.newsbackend;
+package com.mylab;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class NewsBackendApplication {
+public class MylabDataPipelineApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(NewsBackendApplication.class, args);
+        SpringApplication.run(MylabDataPipelineApplication.class, args);
     }
 
 }
