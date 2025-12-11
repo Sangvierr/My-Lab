@@ -1,41 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.mylab.finance.mapper.FinanceMapper">
+<mapper namespace="com.mylab.mylab_data_pipeline.finance.mapper.FinanceMapper">
 
-    <!-- Bulk Insert (MERGE INTO 사용) -->
-    <!-- 리스트(collection)를 돌면서 하나씩 꺼내(item) 처리합니다 -->
+    <!-- Bulk Insert & Update (MERGE INTO 사용) -->
     <update id="insertBulkFinanceData" parameterType="java.util.List">
         <foreach collection="list" item="item" index="index" separator=";" open="DECLARE BEGIN" close="; END;">
             MERGE INTO CORP_FINANCE target
             USING (SELECT #{item.corpCode} as code, #{item.year} as yr, #{item.quarter} as qt FROM dual) source
             ON (target.CORP_CODE = source.code AND target.YEAR = source.yr AND target.QUARTER = source.qt)
+            WHEN MATCHED THEN
+                UPDATE SET
+                    CORP_NAME = #{item.corpName},
+                    REVENUE = #{item.revenue},
+                    OPERATING_PROFIT = #{item.operatingProfit},
+                    NET_INCOME = #{item.netIncome},
+                    AI_SUMMARY = #{item.aiSummary},
+                    AI_RISK = #{item.aiRisk},
+                    CREATED_AT = SYSDATE
+
             WHEN NOT MATCHED THEN
-            INSERT (
-                    ID,
-                    CORP_CODE,
-                    CORP_NAME,
-                    YEAR,
-                    QUARTER,
-                    REVENUE,
-                    OPERATING_PROFIT,
-                    NET_INCOME,
-                    AI_SUMMARY,
-                    AI_RISK,
-                    CREATED_AT
-            ) VALUES (
-                      SEQ_CORP_FINANCE_ID.NEXTVAL,
-                      #{item.corpCode},
-                      #{item.corpName},
-                      #{item.year},
-                      #{item.quarter},
-                      #{item.revenue},
-                      #{item.operatingProfit},
-                      #{item.netIncome},
-                      #{item.aiSummary},
-                      #{item.aiRisk},
-                      SYSDATE
-            )
+                INSERT (
+                ID, CORP_CODE, CORP_NAME, YEAR, QUARTER,
+                REVENUE, OPERATING_PROFIT, NET_INCOME,
+                AI_SUMMARY, AI_RISK, CREATED_AT
+                ) VALUES (
+                    SEQ_CORP_FINANCE_ID.NEXTVAL,
+                    #{item.corpCode}, #{item.corpName}, #{item.year}, #{item.quarter},
+                    #{item.revenue}, #{item.operatingProfit}, #{item.netIncome},
+                    #{item.aiSummary}, #{item.aiRisk}, SYSDATE
+                )
         </foreach>
     </update>
 
