@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.mylab.mylab_data_pipeline.finance.mapper.FinanceMapper">
+<mapper namespace="com.mylab.finance.mapper.FinanceMapper">
 
     <!-- Bulk Insert & Update (MERGE INTO 사용) -->
     <update id="insertBulkFinanceData" parameterType="java.util.List">
