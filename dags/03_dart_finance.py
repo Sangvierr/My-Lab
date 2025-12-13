@@ -1,6 +1,7 @@
 from airflow import DAG
 from airflow.decorators import task
 from airflow.models import Variable
+from airflow.models.param import Param
 from datetime import datetime
 
 # 1. Airflow 변수 가져오기
@@ -10,7 +11,6 @@ DART_KEY = Variable.get("DART_API_KEY")
 MODEL_NAME_VAR = Variable.get("OLLAMA_MODEL")
 
 # 2. API 주소 조합
-JAVA_API_URL = f"http://{MAC_IP}:8090/api/finance/bulk"
 OLLAMA_API_URL = f"http://{WIN_IP}:11434/api/generate"
 
 with DAG(
@@ -19,6 +19,9 @@ with DAG(
     schedule=None,
     catchup=False,
     tags=["mylab", "finance"],
+    params={
+        "target_env": Param("mac", enum=["mac", "windows"], description="Java 서버 환경 선택")
+    }
 ) as dag:
 
     # ----------------------------------------------------------------
@@ -184,7 +187,11 @@ with DAG(
 
         return result_list
 
+    # ----------------------------------------------------------------
     # 2. Java로 전송 (Load)
+    #   - mac 선택 시: MAC_SERVER_IP 사용
+    #   - windows 선택 시: WIN_SERVER_IP 사용
+    # ----------------------------------------------------------------
     @task.virtualenv(
         task_id="send_to_java_bulk",
         requirements=["requests"],
@@ -210,6 +217,7 @@ with DAG(
         except Exception as e:
             print(f"❌ [에러] 연결 실패: {e}")
 
-    # 파이프라인 연결 (수정된 변수명 적용)
+    # 파이프라인 연결
+    JAVA_API_URL = "http://{{ var.value.MAC_SERVER_IP if params.target_env == 'mac' else var.value.WIN_SERVER_IP }}:8090/api/finance/bulk"
     analyzed_data = analyze_dart(DART_KEY, OLLAMA_API_URL, MODEL_NAME_VAR)
     send_to_java(analyzed_data, JAVA_API_URL)
