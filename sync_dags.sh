@@ -6,7 +6,7 @@ NC='\033[0m' # No Color
 
 echo "🚀 Airflow DAG 배포를 시작합니다..."
 
-# 1. dags 폴더가 있는지 확인 (안전장치)
+# 1. dags 폴더가 있는지 확인
 if [ ! -d "dags" ]; then
     echo "❌ 에러: 'dags' 폴더가 안 보입니다. 프로젝트 루트(MY-LAB)에서 실행해주세요."
     exit 1
